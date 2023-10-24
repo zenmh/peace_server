@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import catchAsync from "../../../shared/catchAsync";
-import { AuthService } from "./auth.service";
+import { AuthService } from "./service";
 import sendResponse from "../../../shared/sendResponse";
 import { User } from "@prisma/client";
 
