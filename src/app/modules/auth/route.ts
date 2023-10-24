@@ -6,6 +6,6 @@ import { AuthController } from "./controller";
 const router = Router();
 const { signUp } = AuthController;
 
-router.post("/", validateRequest(ZSignUp), signUp);
+router.post("/signup", validateRequest(ZSignUp), signUp);
 
 export const AuthRoutes = router;
