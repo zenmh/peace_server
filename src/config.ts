@@ -13,4 +13,5 @@ export default {
     refresh_secret: pnv.JWT_REFRESH_SECRET,
     refresh_expires_in: pnv.JWT_REFRESH_EXPIRES_IN,
   },
+  bcrypt_slat_rounds: pnv.BCRYPT_SALT_ROUNDS,
 };
