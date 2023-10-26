@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 import prisma from "../../../constants/prisma";
 import ApiError from "../../../errors/ApiError";
-import { hashPassword } from "../../../helpers/bcrypt";
+import { hashPassword, matchPassword } from "../../../helpers/bcrypt";
 import { ISingUp } from "./interface";
 
 const signUp = async (data: User): Promise<User> => {
@@ -19,10 +19,16 @@ const signUp = async (data: User): Promise<User> => {
 };
 
 const signIn = async ({ email, password }: ISingUp): Promise<User> => {
-  const result = await prisma.user.findFirst({ where: { email, password } });
+  const isUserExist = await prisma.user.findFirst({
+    where: { email },
+  });
 
-  if (!result) throw new ApiError(404, "User not found !!");
-  else return result;
+  if (!isUserExist) throw new ApiError(404, "User not found !!");
+
+  const isPasswordMathch = await matchPassword(password, isUserExist.password);
+
+  if (!isPasswordMathch) throw new ApiError(400, "Password is incorrect !");
+  else return isUserExist;
 };
 
 export const AuthService = { signUp, signIn };
