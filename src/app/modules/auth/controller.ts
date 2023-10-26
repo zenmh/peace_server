@@ -15,4 +15,15 @@ const signUp = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const AuthController = { signUp };
+const signIn = catchAsync(async (req: Request, res: Response) => {
+  const result = await AuthService.signIn(req.body);
+
+  sendResponse<User>(res, {
+    statusCode: 200,
+    success: true,
+    message: "User sign in successfully !",
+    data: result,
+  });
+});
+
+export const AuthController = { signUp, signIn };

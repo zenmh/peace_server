@@ -15,4 +15,11 @@ const ZSignUp = z.object({
   }),
 });
 
-export { ZSignUp };
+const ZSignIn = z.object({
+  body: z.object({
+    emaiL: z.string({ required_error: "Email is required !!" }).email(),
+    password: z.string({ required_error: "Password is required !!" }),
+  }),
+});
+
+export { ZSignUp, ZSignIn };

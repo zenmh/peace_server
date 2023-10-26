@@ -1,11 +1,13 @@
 import { Router } from "express";
 import validateRequest from "../../middlewares/validateRequest";
-import { ZSignUp } from "./validation";
+import { ZSignIn, ZSignUp } from "./validation";
 import { AuthController } from "./controller";
 
 const router = Router();
-const { signUp } = AuthController;
+const { signUp, signIn } = AuthController;
 
-router.post("/signup", validateRequest(ZSignUp), signUp);
+router
+  .post("/signup", validateRequest(ZSignUp), signUp)
+  .post("/signin", validateRequest(ZSignIn), signIn);
 
 export const AuthRoutes = router;
