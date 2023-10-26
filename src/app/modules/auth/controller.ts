@@ -2,27 +2,39 @@ import { Request, Response } from "express";
 import catchAsync from "../../../shared/catchAsync";
 import { AuthService } from "./service";
 import sendResponse from "../../../shared/sendResponse";
-import { User } from "@prisma/client";
+import config from "../../../config";
 
 const signUp = catchAsync(async (req: Request, res: Response) => {
-  const result = await AuthService.signUp(req.body);
+  const { accessToken, refreshToken, result } = await AuthService.signUp(
+    req.body
+  );
 
-  sendResponse<User>(res, {
+  res.cookie("refreshToken", refreshToken, {
+    secure: config.env === "production",
+    httpOnly: true,
+  });
+
+  sendResponse(res, {
     statusCode: 200,
     success: true,
     message: "User sign up successfully !",
-    data: result,
+    data: { accessToken, result },
   });
 });
 
 const signIn = catchAsync(async (req: Request, res: Response) => {
-  const result = await AuthService.signIn(req.body);
+  const { accessToken, refreshToken } = await AuthService.signIn(req.body);
 
-  sendResponse<User>(res, {
+  res.cookie("refreshToken", refreshToken, {
+    secure: config.env === "production",
+    httpOnly: true,
+  });
+
+  sendResponse(res, {
     statusCode: 200,
     success: true,
     message: "User sign in successfully !",
-    data: result,
+    data: { accessToken },
   });
 });
 
