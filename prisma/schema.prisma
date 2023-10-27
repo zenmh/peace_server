@@ -14,6 +14,30 @@ enum Role {
   SUPER_ADMIN
 }
 
+enum Speciality {
+  THYROID
+  EYE
+  NEUROLOGY
+  CARDIOLOGY
+  MEDICINE
+  PSYCHIATRY
+  DENTIST
+  ORTHOPEDICS
+  HAEMATOLOGY
+  GYNAECOLOGY
+}
+
+enum Branch {
+  BARISHAL
+  CHATTOGRAM
+  DHAKA
+  KHULNA
+  RAJSHAHI
+  RANGPUR
+  MYMENSINGH
+  SYLHET
+}
+
 model User {
   id String @id @default(uuid())
   
@@ -29,4 +53,41 @@ model User {
   updatedAt DateTime @updatedAt
 
   @@map("users")  
+}
+
+model Treatment {
+  id String @id @default(uuid())
+
+  name Speciality
+  slots String[]
+
+  doctors Doctor[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("treatments") 
+}
+
+model Doctor {
+  id String @id @default(uuid())
+
+  name String
+  email String @unique
+  password String
+  contactNo String
+  address String?
+  image String?
+  experiences String
+
+  speciality Speciality
+  branch Branch @default(DHAKA)
+
+  treatmentId String
+  treatment Treatment @relation(fields: [treatmentId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("doctors") 
 }
