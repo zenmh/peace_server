@@ -5,6 +5,8 @@ import sendResponse from "../../../shared/sendResponse";
 import { Doctor } from "@prisma/client";
 import { DoctorWithoutPassword } from "./interface";
 import pick from "../../../shared/pick";
+import { doctorFilterableFields } from "./constant";
+import { paginationFields } from "../../../constants/pagination";
 
 const createDoctor = catchAsync(async (req: Request, res: Response) => {
   const result = await DoctorService.createDoctor(req.body);
@@ -29,7 +31,10 @@ const getDoctor = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getDoctors = catchAsync(async (req: Request, res: Response) => {
-  const result = await DoctorService.getDoctors();
+  const filters = pick(req.query, doctorFilterableFields);
+  const options = pick(req.query, paginationFields);
+
+  const result = await DoctorService.getDoctors(filters, options);
 
   sendResponse<DoctorWithoutPassword[]>(res, {
     statusCode: 200,
