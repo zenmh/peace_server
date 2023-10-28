@@ -13,4 +13,14 @@ const select = {
   updatedAt: true,
 };
 
-export { select };
+const doctorSearchableFields: string[] = ["id", "name", "email", "contactNo"];
+
+const doctorFilterableFields: string[] = [
+  "searchTerm",
+  "id",
+  "email",
+  "contactNo",
+  "branch",
+];
+
+export { select, doctorSearchableFields, doctorFilterableFields };
