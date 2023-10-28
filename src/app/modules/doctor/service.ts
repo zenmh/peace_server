@@ -35,4 +35,12 @@ const createDoctor = async (data: Doctor): Promise<Doctor> => {
   return result;
 };
 
-export const DoctorService = { createDoctor };
+const getDoctor = async (id: string): Promise<Doctor> => {
+  const result = await prisma.doctor.findFirst({ where: { id } });
+
+  if (!result) throw new ApiError(404, "Doctor not found !!");
+
+  return result;
+};
+
+export const DoctorService = { createDoctor, getDoctor };
