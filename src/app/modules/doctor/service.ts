@@ -6,6 +6,12 @@ import ApiError from "../../../errors/ApiError";
 const createDoctor = async (data: Doctor): Promise<Doctor> => {
   let result;
 
+  const isExist = await prisma.user.findFirst({
+    where: { name: data.name, email: data.email },
+  });
+
+  if (isExist) throw new ApiError(409, "The doctor is already exists !!");
+
   data.password = await hashPassword(data.password);
 
   await prisma.$transaction(async (tx) => {
