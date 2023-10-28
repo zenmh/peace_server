@@ -7,13 +7,15 @@ import { Role } from "@prisma/client";
 
 const router = Router();
 const { ADMIN, SUPER_ADMIN } = Role;
-const { createDoctor } = DoctorController;
+const { createDoctor, getDoctor } = DoctorController;
 
-router.post(
-  "/",
-  auth(ADMIN, SUPER_ADMIN),
-  validateRequest(ZCreateDoctor),
-  createDoctor
-);
+router
+  .post(
+    "/",
+    auth(ADMIN, SUPER_ADMIN),
+    validateRequest(ZCreateDoctor),
+    createDoctor
+  )
+  .get("/:id", getDoctor);
 
 export const DoctorRoutes = router;
