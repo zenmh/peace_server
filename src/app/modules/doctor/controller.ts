@@ -18,7 +18,7 @@ const createDoctor = catchAsync(async (req: Request, res: Response) => {
 const getDoctor = catchAsync(async (req: Request, res: Response) => {
   const result = await DoctorService.getDoctor(req.params.id);
 
-  sendResponse<Doctor>(res, {
+  sendResponse<Omit<Doctor, "password">>(res, {
     statusCode: 200,
     success: true,
     message: "Doctor retrieved successfully !",

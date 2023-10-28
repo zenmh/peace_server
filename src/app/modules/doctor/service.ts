@@ -3,6 +3,21 @@ import { hashPassword } from "../../../helpers/bcrypt";
 import prisma from "../../../constants/prisma";
 import ApiError from "../../../errors/ApiError";
 
+const select = {
+  id: true,
+  name: true,
+  email: true,
+  contactNo: true,
+  address: true,
+  image: true,
+  experiences: true,
+  speciality: true,
+  branch: true,
+  treatmentId: true,
+  createdAt: true,
+  updatedAt: true,
+};
+
 const createDoctor = async (data: Doctor): Promise<Doctor> => {
   let result;
 
@@ -35,8 +50,8 @@ const createDoctor = async (data: Doctor): Promise<Doctor> => {
   return result;
 };
 
-const getDoctor = async (id: string): Promise<Doctor> => {
-  const result = await prisma.doctor.findFirst({ where: { id } });
+const getDoctor = async (id: string): Promise<Omit<Doctor, "password">> => {
+  const result = await prisma.doctor.findUnique({ where: { id }, select });
 
   if (!result) throw new ApiError(404, "Doctor not found !!");
 
