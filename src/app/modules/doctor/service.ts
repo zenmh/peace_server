@@ -44,4 +44,10 @@ const getDoctor = async (id: string): Promise<Omit<Doctor, "password">> => {
   return result;
 };
 
+const getDoctors = async (): Promise<Omit<Doctor, "password">[]> => {
+  const result = await prisma.doctor.findMany({ select });
+
+  return result;
+};
+
 export const DoctorService = { createDoctor, getDoctor };
