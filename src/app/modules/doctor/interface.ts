@@ -1,5 +1,13 @@
 import { Doctor } from "@prisma/client";
 
-type DoctorWithoutPassword = Omit<Doctor, "password">;
+type IDoctorWithoutPassword = Omit<Doctor, "password">;
 
-export { DoctorWithoutPassword };
+type IDoctorFilters = {
+  searchTerm?: string;
+  id?: string;
+  email?: string;
+  contactNo?: string;
+  branch?: string;
+};
+
+export { IDoctorWithoutPassword, IDoctorFilters };
