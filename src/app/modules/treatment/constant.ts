@@ -13,4 +13,8 @@ const slots: string[] = [
   "08.30 PM - 09.00 PM",
 ];
 
-export { slots };
+const treatmentFilterableFields: string[] = ["searchTerm", "id"];
+
+const treatmentSearchableFields: string[] = ["name", "slots"];
+
+export { slots, treatmentFilterableFields, treatmentSearchableFields };
