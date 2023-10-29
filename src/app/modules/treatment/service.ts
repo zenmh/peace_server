@@ -3,7 +3,6 @@ import prisma from "../../../constants/prisma";
 import ApiError from "../../../errors/ApiError";
 import { slots, treatmentFilterableFields } from "./constant";
 import { ITreatmentFilters } from "./interface";
-import { IPaginationOptions } from "../../../interfaces/pagination";
 
 const createTreatment = async (data: Treatment): Promise<Treatment> => {
   const isExist = await prisma.treatment.findFirst({
@@ -49,4 +48,4 @@ const getTreatments = async ({
   return result;
 };
 
-export const TreatmentService = { createTreatment };
+export const TreatmentService = { createTreatment, getTreatments };
